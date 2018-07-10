@@ -64,8 +64,22 @@ App.propTypes = {
 };
 
 const mapStateToProps = state => {
+  let postsArray = Object.keys(state.masterPostList).map(key => {
+    return state.masterPostList[key];
+  });
+
+  postsArray.sort(function(a,b) {
+    return (a.netvote < b.netvote) ? 1 : ((b.netvote < a.netvote) ? -1 : 0);}
+  );
+
+  const arrayToObject = (array) => array.reduce((obj, item) => {
+    obj[item.id] = item;
+    return obj;
+  }, {});
+  const newMasterPostList = arrayToObject(postsArray);
+
   return {
-    masterPostList: state.masterPostList
+    masterPostList: newMasterPostList
   };
 };
 
