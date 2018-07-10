@@ -4,10 +4,20 @@ import { connect } from 'react-redux';
 import c from './../constants';
 
 function Post(props){
+
   function handleUpvoteClick() {
     const { dispatch } = props;
     const action = {
       type: c.ADD_UPVOTE,
+      id: props.postId
+    };
+    dispatch(action);
+  }
+
+  function handleDownvoteClick() {
+    const { dispatch } = props;
+    const action = {
+      type: c.ADD_DOWNVOTE,
       id: props.postId
     };
     dispatch(action);
@@ -18,7 +28,7 @@ function Post(props){
       <h3>{props.title} - {props.content}</h3>
       <p>{props.formattedWaitTime}</p>
       <p><button onClick={handleUpvoteClick}>Upvote</button>{props.upvote}</p>
-      <p>Downvote{props.downvote}</p>
+      <p><button onClick={handleDownvoteClick}>Downvote</button>{props.downvote}</p>
       <p>NetVote{props.netvote}</p>
       <hr/>
     </div>
