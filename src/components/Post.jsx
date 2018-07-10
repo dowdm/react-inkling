@@ -4,44 +4,36 @@ import { connect } from 'react-redux';
 import c from './../constants';
 
 function Post(props){
-  function handleSavingSelectedPost(ticketId){
+  function handleUpvoteClick() {
     const { dispatch } = props;
     const action = {
-      type: c.SELECT_POST,
-      postId: postId
+      type: c.ADD_UPVOTE,
+      id: props.postId
     };
     dispatch(action);
   }
-  const postInformation =
-    <div>
-      <style jsx>{`
-        .red-text {
-          color: red;
-        }
-        `}</style>
 
+  return (
+    <div>
       <h3>{props.title} - {props.content}</h3>
       <p>{props.formattedWaitTime}</p>
-      <p>Upvote{props.upvote}</p>
+      <p><button onClick={handleUpvoteClick}>Upvote</button>{props.upvote}</p>
       <p>Downvote{props.downvote}</p>
       <p>NetVote{props.netvote}</p>
       <hr/>
-    </div>;
-
-  return (
-    <div onClick={() => {handleSavingSelectedPost(props.postId);}}>
-      {postInformation}
     </div>
   );
 }
 
-// Ticket.propTypes = {
-//   names: PropTypes.string,
-//   location: PropTypes.string,
-//   issue: PropTypes.string,
-//   formattedWaitTime: PropTypes.string.isRequired,
-//   currentRouterPath: PropTypes.string,
-//   ticketId: PropTypes.string.isRequired
-// };
+Post.propTypes = {
+  dispatch: PropTypes.func,
+  title: PropTypes.string,
+  content: PropTypes.string,
+  upvote: PropTypes.number,
+  downvote: PropTypes.number,
+  netvote: PropTypes.number,
+  formattedWaitTime: PropTypes.string,
+  postId: PropTypes.string.isRequired
+};
 
 export default connect()(Post);

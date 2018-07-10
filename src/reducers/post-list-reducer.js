@@ -5,7 +5,7 @@ export default (state = {}, action) => {
   const { title, content, upvote, downvote, netvote, timeOpen, id, formattedWaitTime } = action;
 
   switch (action.type) {
-  case c.ADD_POST:
+  case c.ADD_POST: {
     newState = Object.assign({}, state, {
       [id]: {
         title: title,
@@ -19,15 +19,27 @@ export default (state = {}, action) => {
       }
     });
     return newState;
+  }
 
-  case c.UPDATE_TIME:
-    const newTicket = Object.assign({}, state[id], {formattedWaitTime});
+  case c.ADD_UPVOTE: {
+    const newUpVote = Object.assign({}, state[id]);
+    newUpVote.upvote += 1;
     newState = Object.assign({}, state, {
-      [id]: newTicket
+      [id]: newUpVote
     });
     return newState;
+  }
 
-  default:
+  case c.UPDATE_TIME: {
+    const newPost = Object.assign({}, state[id], {formattedWaitTime});
+    newState = Object.assign({}, state, {
+      [id]: newPost
+    });
+    return newState;
+  }
+
+  default: {
     return state;
+  }
   }
 };
